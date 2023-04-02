@@ -49,6 +49,11 @@ export interface CreateLabelArgs {
   Texte?: string,
 };
 
+export interface Label {
+  STAT: string
+  ExpeditionNum: string,
+  URL_Etiquette: string,
+}
 
 export const publicUrl: "http://www.mondialrelay.com/";
 export const apiUrl: "https://api.mondialrelay.com/Web_Services.asmx?WSDL";
@@ -57,7 +62,7 @@ export function securityKey(args: any): string;
 export function validateStatusCode(code: any): boolean;
 export function searchZipCodes(args: any): Promise<any>;
 export function searchPointsRelais(args: any): Promise<any>;
-export function createLabel(args: CreateLabelArgs, privateKey?: string): Promise<any>;
+export function createLabel(args: CreateLabelArgs, privateKey?: string): Promise<Label>;
 export function getLabels(args: any): Promise<any>;
 export function getStatMessage(args: any): Promise<any>;
 export function getTracking(args: any): Promise<any>;
