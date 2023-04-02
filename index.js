@@ -79,6 +79,9 @@ const createLabel = (args, privateKeyArg = privateKey) => {
                     return reject(err);
                 }
                 if (validateStatusCode(result.WSI2_CreationEtiquetteResult.STAT)) {
+                    if (!result.WSI2_CreationEtiquetteResult.URL_Etiquette.startsWith('http')) {
+                      result.WSI2_CreationEtiquetteResult.URL_Etiquette = `${publicUrl}${result.WSI2_CreationEtiquetteResult.URL_Etiquette}`;
+                    }
                     return resolve(result.WSI2_CreationEtiquetteResult);
                 } else {
                     return reject(statusCodes[result.WSI2_CreationEtiquetteResult.STAT]);
