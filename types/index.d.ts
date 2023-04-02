@@ -1,6 +1,6 @@
 import statusCodes = require("./statusCodes");
 
-export interface CreateLabelArgs {
+export type CreateLabelArgs = {
   Enseigne: string,
   ModeCol: string,
   ModeLiv: string,
@@ -49,21 +49,39 @@ export interface CreateLabelArgs {
   Texte?: string,
 };
 
-export interface Label {
+export type Label = {
   STAT: string
   ExpeditionNum: string,
   URL_Etiquette: string,
 }
 
+export type SearchArgs = {
+  Enseigne: string;
+  Pays: string;
+  Ville: string;
+  CP: string;
+  NombreResultats: string;
+  Latitude: string;
+  Longitude: string;
+};
+
+export type RelayPoint = {
+  Num: string;
+  LgAdr1: string;
+  LgADR3: string;
+  Ville: string;
+  CP: string;
+}
+
 export const publicUrl: "http://www.mondialrelay.com/";
 export const apiUrl: "https://api.mondialrelay.com/Web_Services.asmx?WSDL";
 
-export function securityKey(args: any): string;
-export function validateStatusCode(code: any): boolean;
-export function searchZipCodes(args: any): Promise<any>;
-export function searchPointsRelais(args: any): Promise<any>;
+export function securityKey(args: any, privateKey?: string): string;
+export function validateStatusCode(code: any, privateKey?: string): boolean;
+export function searchZipCodes(args: any, privateKey?: string): Promise<any>;
+export function searchPointsRelais(args: SearchArgs, privateKey?: string): Promise<RelayPoint[]>;
 export function createLabel(args: CreateLabelArgs, privateKey?: string): Promise<Label>;
-export function getLabels(args: any): Promise<any>;
-export function getStatMessage(args: any): Promise<any>;
-export function getTracking(args: any): Promise<any>;
+export function getLabels(args: any, privateKey?: string): Promise<any>;
+export function getStatMessage(args: any, privateKey?: string): Promise<any>;
+export function getTracking(args: any, privateKey?: string): Promise<any>;
 export { statusCodes };
