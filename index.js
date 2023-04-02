@@ -9,10 +9,9 @@ const publicUrl = 'http://www.mondialrelay.com/';
 const apiUrl = 'https://api.mondialrelay.com/Web_Services.asmx?WSDL';
 
 // calculate Mondial Relay security key
-const securityKey = (args) => {
-    const content = args.filter(n => n).join('') + privateKey;
+const securityKey = (args, privateKeyArg = privateKey) => {
+    const content = args.filter(n => n).join('') + privateKeyArg;
     return crypto.createHash('md5').update(content).digest('hex').toUpperCase();
-
 }
 
 const validateStatusCode = (code) => {
@@ -45,13 +44,13 @@ const searchZipCodes = (args) => {
 }
 
 // WSI4_PointRelais_Recherche
-const searchPointsRelais = (args) => {
+const searchPointsRelais = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
         return soap.createClient(apiUrl, (err, client) => {
             if (err) {
                 return reject(err);
             }
-            args.Security = securityKey(Object.values(args));
+            args.Security = securityKey(Object.values(args), privateKeyArg);
             client.WSI4_PointRelais_Recherche(args, (err, result) => {
                 if (err) {
                     return reject(err);
@@ -154,15 +153,15 @@ const getTracking = (args) => {
 }
 
 module.exports = {
-    publicUrl,
-    apiUrl,
-    statusCodes,
-    securityKey,
-    validateStatusCode,
-    searchZipCodes,
-    searchPointsRelais,
-    createLabel,
-    getLabels,
-    getStatMessage,
-    getTracking,
+  publicUrl,
+  apiUrl,
+  statusCodes,
+  securityKey,
+  validateStatusCode,
+  searchZipCodes,
+  searchPointsRelais,
+  createLabel,
+  getLabels,
+  getStatMessage,
+  getTracking,
 };
