@@ -1,18 +1,12 @@
 var soap = require('soap');
-const crypto = require('crypto');
 
-
+const { securityKey, securityKeyForCreateLabel } = require('./security');
 const statusCodes = require('./statusCodes');
 const merchant = process.env.ENSEIGNE || 'BDTEST13';
 const privateKey = process.env.PRIVATE_KEY || 'PrivateK';
 const publicUrl = 'http://www.mondialrelay.com/';
 const apiUrl = 'https://api.mondialrelay.com/Web_Services.asmx?WSDL';
 
-// calculate Mondial Relay security key
-const securityKey = (args, privateKeyArg = privateKey) => {
-    const content = args.filter(n => n).join('') + privateKeyArg;
-    return crypto.createHash('md5').update(content).digest('hex').toUpperCase();
-}
 
 const validateStatusCode = (code) => {
     if (code !== '0') {
@@ -73,7 +67,7 @@ const createLabel = (args, privateKeyArg = privateKey) => {
                 return reject(err);
             }
 
-            args.Security = securityKey(Object.values(args), privateKeyArg);
+            args.Security = securityKeyForCreateLabel(args, privateKeyArg);
             client.WSI2_CreationEtiquette(args, (err, result) => {
                 if (err) {
                     return reject(err);
