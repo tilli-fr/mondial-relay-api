@@ -66,11 +66,32 @@ export type SearchArgs = {
 };
 
 export type RelayPoint = {
+  STAT: string;
   Num: string;
   LgAdr1: string;
-  LgADR3: string;
+  LgAdr2: string;
+  LgAdr3: string;
+  LgAdr4: string;
   Ville: string;
   CP: string;
+  Pays: string;
+  Localisation1: string;
+  Localisation2: string;
+  Latitude: string;
+  Longitude: string;
+  TypeActivite: string;
+  Information: string;
+  Horaires_Lundi: { string: string[] },
+  Horaires_Mardi: { string: string[] },
+  Horaires_Mercredi: { string: string[] },
+  Horaires_Jeudi: { string: string[] },
+  Horaires_Vendredi: { string: string[] },
+  Horaires_Samedi: { string: string[] },
+  Horaires_Dimanche: { string: string[] },
+  Informations_Dispo: null,
+  URL_Photo: string,
+  URL_Plan: string,
+  Distance: string,
 }
 
 export const publicUrl: "http://www.mondialrelay.com/";
