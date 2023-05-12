@@ -4,7 +4,7 @@ const { securityKey, securityKeyForCreateLabel } = require('./security');
 const statusCodes = require('./statusCodes');
 const merchant = process.env.ENSEIGNE || 'BDTEST13';
 const privateKey = process.env.PRIVATE_KEY || 'PrivateK';
-const publicUrl = 'http://www.mondialrelay.com/';
+const publicUrl = 'http://www.mondialrelay.com';
 const apiUrl = 'https://api.mondialrelay.com/Web_Services.asmx?WSDL';
 
 
@@ -74,7 +74,11 @@ const createLabel = (args, privateKeyArg = privateKey) => {
                 }
                 if (validateStatusCode(result.WSI2_CreationEtiquetteResult.STAT)) {
                     if (!result.WSI2_CreationEtiquetteResult.URL_Etiquette.startsWith('http')) {
-                      result.WSI2_CreationEtiquetteResult.URL_Etiquette = `${publicUrl}${result.WSI2_CreationEtiquetteResult.URL_Etiquette}`;
+                        const url = result.WSI2_CreationEtiquetteResult.URL_Etiquette;
+                        if (!url.startsWith('/')) {
+                            url = `/${url}`;
+                        }
+                        result.WSI2_CreationEtiquetteResult.URL_Etiquette = `${publicUrl}${url}`;
                     }
                     return resolve(result.WSI2_CreationEtiquetteResult);
                 } else {
