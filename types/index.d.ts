@@ -94,6 +94,24 @@ export type RelayPoint = {
   Distance: string,
 }
 
+export type Tracking = {
+  STAT: string;
+  Libelle01: string;
+  Relais_Libelle: string;
+  Relais_Num: string;
+  Libelle02: string;
+  Tracing: {
+    ret_WSI2_sub_TracingColisDetaille: {
+      Libelle: string,
+      Date: string,
+      Heure: string,
+      Emplacement: string,
+      Relais_Num: string,
+      Relais_Pays: string,
+    }[]
+  }
+};
+
 export const publicUrl: "http://www.mondialrelay.com/";
 export const apiUrl: "https://api.mondialrelay.com/Web_Services.asmx?WSDL";
 
@@ -104,5 +122,5 @@ export function searchPointsRelais(args: SearchArgs, privateKey?: string): Promi
 export function createLabel(args: CreateLabelArgs, privateKey?: string): Promise<Label>;
 export function getLabels(args: any, privateKey?: string): Promise<any>;
 export function getStatMessage(args: any, privateKey?: string): Promise<any>;
-export function getTracking(args: any, privateKey?: string): Promise<any>;
+export function getTracking(args: any, privateKey?: string): Promise<Tracking>;
 export { statusCodes };
