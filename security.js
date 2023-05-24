@@ -54,13 +54,30 @@ const createLabelArgsOrder = [
   'TRDV',
   'Assurance',
   'Instructions',
-  'Texte',
 ];
 
 const securityKeyForCreateLabel = (argsObject, privateKeyArg = privateKey) => {
   // transform argsObject into an array sorted by keys according to createLabelArgsOrder
   const args = Object.entries(argsObject)
+    .filter(([key]) => createLabelArgsOrder.includes(key))
     .sort(([key1], [key2]) => createLabelArgsOrder.indexOf(key1) - createLabelArgsOrder.indexOf(key2))
+    .map(([key, value]) => value);
+  const content = args.filter(n => n).join('') + privateKeyArg;
+
+  return crypto.createHash('md5').update(content).digest('hex').toUpperCase();
+}
+
+const getTrackingArgsOrder = [
+  'Enseigne',
+  'Expedition',
+  'Langue',
+];
+
+const securityKeyForGetTracking = (argsObject, privateKeyArg = privateKey) => {
+  // transform argsObject into an array sorted by keys according to createLabelArgsOrder
+  const args = Object.entries(argsObject)
+    .filter(([key]) => getTrackingArgsOrder.includes(key))
+    .sort(([key1], [key2]) => getTrackingArgsOrder.indexOf(key1) - getTrackingArgsOrder.indexOf(key2))
     .map(([key, value]) => value);
   const content = args.filter(n => n).join('') + privateKeyArg;
 
@@ -70,4 +87,5 @@ const securityKeyForCreateLabel = (argsObject, privateKeyArg = privateKey) => {
 module.exports = {
   securityKey,
   securityKeyForCreateLabel,
+  securityKeyForGetTracking,
 };

@@ -1,6 +1,6 @@
 var soap = require('soap');
 
-const { securityKey, securityKeyForCreateLabel } = require('./security');
+const { securityKey, securityKeyForCreateLabel, securityKeyForGetTracking } = require('./security');
 const statusCodes = require('./statusCodes');
 const merchant = process.env.ENSEIGNE || 'BDTEST13';
 const privateKey = process.env.PRIVATE_KEY || 'PrivateK';
@@ -9,10 +9,8 @@ const apiUrl = 'https://api.mondialrelay.com/Web_Services.asmx?WSDL';
 
 
 const validateStatusCode = (code) => {
-    if (code !== '0') {
-        return false;
-    }
-    return true;
+    const validCodes = ['0', '80', '81', '82', '83'];
+    return validCodes.includes(code);
 }
 
 // WSI2_RechercheCP
@@ -134,7 +132,7 @@ const getTracking = (args, privateKeyArg = privateKey) => {
             if (err) {
                 return reject(err);
             }
-            args.Security = securityKey(Object.values(args), privateKeyArg);
+            args.Security = securityKeyForGetTracking(args, privateKeyArg);
             client.WSI2_TracingColisDetaille(args, (err, result) => {
                 if (err) {
                     return reject(err);
