@@ -94,6 +94,12 @@ export type RelayPoint = {
   Distance: string,
 }
 
+export type GetTrackingArgs = {
+  Enseigne: string;
+  Expedition: string;
+  Langue: string;
+}
+
 export type Tracking = {
   STAT: string;
   Libelle01: string;
@@ -122,5 +128,5 @@ export function searchPointsRelais(args: SearchArgs, privateKey?: string): Promi
 export function createLabel(args: CreateLabelArgs, privateKey?: string): Promise<Label>;
 export function getLabels(args: any, privateKey?: string): Promise<any>;
 export function getStatMessage(args: any, privateKey?: string): Promise<any>;
-export function getTracking(args: any, privateKey?: string): Promise<Tracking>;
+export function getTracking(args: GetTrackingArgs, privateKey?: string): Promise<Tracking>;
 export { statusCodes };

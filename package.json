@@ -1,6 +1,6 @@
 {
   "name": "mondial-relay",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "MondialRelay API web services using node",
   "main": "index.js",
   "types": "types/index.d.ts",
