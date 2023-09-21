@@ -4,7 +4,7 @@ const { securityKey, securityKeyForCreateLabel, securityKeyForGetTracking } = re
 const statusCodes = require('./statusCodes');
 const merchant = process.env.ENSEIGNE || 'BDTEST13';
 const privateKey = process.env.PRIVATE_KEY || 'PrivateK';
-const publicUrl = 'http://www.mondialrelay.com/';
+const publicUrl = 'https://www.mondialrelay.com/';
 const apiUrl = 'https://api.mondialrelay.com/Web_Services.asmx?WSDL';
 
 
@@ -13,10 +13,20 @@ const validateStatusCode = (code) => {
     return validCodes.includes(code);
 }
 
+const createClient = (callback) => {
+    return soap.createClient(apiUrl, (err, client) => {
+        if (err) {
+            return callback(err);
+        }
+        client.setEndpoint(apiUrl);
+        return callback(null, client);
+    });
+}
+
 // WSI2_RechercheCP
 const searchZipCodes = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
-        return soap.createClient(apiUrl, (err, client) => {
+        return createClient((err, client) => {
             if (err) {
                 return reject(err);
             }
@@ -38,7 +48,7 @@ const searchZipCodes = (args, privateKeyArg = privateKey) => {
 // WSI4_PointRelais_Recherche
 const searchPointsRelais = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
-        return soap.createClient(apiUrl, (err, client) => {
+        return createClient((err, client) => {
             if (err) {
                 return reject(err);
             }
@@ -60,7 +70,7 @@ const searchPointsRelais = (args, privateKeyArg = privateKey) => {
 // WSI2_CreationEtiquette
 const createLabel = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
-        return soap.createClient(apiUrl, (err, client) => {
+        return createClient((err, client) => {
             if (err) {
                 return reject(err);
             }
@@ -87,7 +97,7 @@ const createLabel = (args, privateKeyArg = privateKey) => {
 // WSI3_GetEtiquettes
 const getLabels = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
-        return soap.createClient(apiUrl, (err, client) => {
+        return createClient((err, client) => {
             if (err) {
                 return reject(err);
             }
@@ -110,7 +120,7 @@ const getLabels = (args, privateKeyArg = privateKey) => {
 // WSI2_STAT_Label
 const getStatMessage = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
-        return soap.createClient(apiUrl, (err, client) => {
+        return createClient((err, client) => {
             if (err) {
                 return reject(err);
             }
@@ -128,7 +138,7 @@ const getStatMessage = (args, privateKeyArg = privateKey) => {
 // WSI2_TracingColisDetaille
 const getTracking = (args, privateKeyArg = privateKey) => {
     return new Promise((resolve, reject) => {
-        return soap.createClient(apiUrl, (err, client) => {
+        return createClient((err, client) => {
             if (err) {
                 return reject(err);
             }

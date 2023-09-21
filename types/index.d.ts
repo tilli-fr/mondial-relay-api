@@ -118,7 +118,7 @@ export type Tracking = {
   }
 };
 
-export const publicUrl: "http://www.mondialrelay.com/";
+export const publicUrl: "https://www.mondialrelay.com/";
 export const apiUrl: "https://api.mondialrelay.com/Web_Services.asmx?WSDL";
 
 export function securityKey(args: any, privateKey?: string): string;
