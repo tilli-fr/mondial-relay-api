@@ -58,7 +58,7 @@ const searchPointsRelais = (args, privateKeyArg = privateKey) => {
                     return reject(err);
                 }
                 if (validateStatusCode(result.WSI4_PointRelais_RechercheResult.STAT)) {
-                    return resolve(result.WSI4_PointRelais_RechercheResult.PointsRelais.PointRelais_Details);
+                    return resolve(result.WSI4_PointRelais_RechercheResult?.PointsRelais?.PointRelais_Details);
                 } else {
                     return reject(statusCodes[result.WSI4_PointRelais_RechercheResult.STAT]);
                 }
